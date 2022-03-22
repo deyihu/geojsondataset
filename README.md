@@ -69,7 +69,7 @@ geojson dataset,In the dataset, a large number of geojson can be automatically c
   geoDataSet.on("testgeojson", handler);
   geoDataSet.off("testgeojson", handler);
   ```
-- addGeoData(dataGroupId,geojson) `remove Listen for a data set to be dequeued`
+- addGeoData(dataGroupId,geojson) `add geojson data to dataGroupId`
 
   - dataGroupId `the id data group`
   - geojson `geojson data`

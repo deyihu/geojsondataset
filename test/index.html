@@ -21,7 +21,7 @@
 <script type="text/javascript" src="https://unpkg.com/maptalks/dist/maptalks.min.js"></script>
 <!-- <script type="text/javascript" src="https://unpkg.com/@maptalks/gl/dist/maptalksgl.js"></script> -->
 <script type="text/javascript" src="https://unpkg.com/three@0.104.0/build/three.min.js"></script>
-<script type="text/javascript" src="https://unpkg.com/maptalks.three/dist/maptalks.three.js"></script>
+<script type="text/javascript" src="https://unpkg.com/maptalks.three/dist/maptalks.three.min.js"></script>
 <script type="text/javascript" src="../dist/geojsondataset.js"></script>
 
 <body>
@@ -30,7 +30,8 @@
 
     <script>
         var map = new maptalks.Map('map', {
-            "center": [120.35410921458265, 30.14518949717305], "zoom": 13.745375881176956, "pitch": 72.80000000000004, "bearing": -0.13760818373077655,
+            "center": [-87.3960529394592, 54.181683381962245], "zoom": 3.745375881176956,
+            "pitch": 65.80000000000004, "bearing": -0.13760818373077655,
             baseLayer: new maptalks.TileLayer('base', {
                 urlTemplate: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
                 subdomains: ['a', 'b', 'c', 'd'],
@@ -42,26 +43,16 @@
         const geoDataSet = new geojsondataset.GeoDataSet({ coordinateCount: 3000, loopFPS: 2 });
         const dataGroupId = 'dikuai';
 
-        const material = new THREE.MeshPhongMaterial({ color: 'red' });
-        const material1 = new THREE.MeshPhongMaterial({ color: 'white' });
+        const material = new THREE.LineBasicMaterial({ color: 'red' });
+        const material1 = new THREE.LineBasicMaterial({ color: 'black' });
         geoDataSet.on(dataGroupId, (geojson) => {
-            // console.log(geojson);
-            // geojson.features.forEach(element => {
-            //     element.properties.height = 100;
-            // });
-            const mesh = threeLayer.toExtrudePolygons(geojson.features, { topColor: '#fff', asynchronous: true }, material1);
+            const mesh = threeLayer.toLines(geojson.features, { topColor: '#fff', asynchronous: true }, material1);
             threeLayer.delayAddMesh(mesh);
 
         })
         geoDataSet.on(dataGroupId, (geojson) => {
             // console.log(geojson);
-            // const polygons = maptalks.GeoJSON.toGeometry(geojson);
-            // vLayer1.addGeometry(polygons);
-            // const polygons = maptalks.GeoJSON.toGeometry(geojson);
-            // polygons.forEach(p => {
-            //     p.setProperties({ height: 1 })
-            // });
-            const mesh = threeLayer.toExtrudePolygons(geojson.features, { topColor: '#fff', altitude: 500, asynchronous: true }, material);
+            const mesh = threeLayer.toLines(geojson.features, { topColor: '#fff', altitude: 50000, asynchronous: true }, material);
             threeLayer.delayAddMesh(mesh);
         })
 
@@ -71,6 +62,8 @@
             // forceRenderOnMoving: true,
             // forceRenderOnRotating: true
         });
+        var stats;
+
         threeLayer.prepareToDraw = function (gl, scene, camera) {
             stats = new Stats();
             stats.domElement.style.zIndex = 100;
@@ -99,10 +92,10 @@
         }
 
         function addPolygon() {
-            fetch('./export-1647920376160.geojson').then(res => res.json()).then(geojson => {
-                geojson.features.forEach(element => {
-                    element.properties.height = 500;
-                });
+            fetch('https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_10m_rivers_north_america.geojson').then(res => res.json()).then(geojson => {
+                // geojson.features.forEach(element => {
+                //     element.properties.height = 500;
+                // });
                 geoDataSet.addGeoData(dataGroupId, geojson);
             })
         }
