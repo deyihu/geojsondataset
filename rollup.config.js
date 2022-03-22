@@ -36,7 +36,7 @@ module.exports = [
             'globals': {
 
             },
-            'file': `dist/${pkg.nam}.js`
+            'file': `dist/${pkg.name}.js`
         }
     },
     {
@@ -54,7 +54,7 @@ module.exports = [
             'globals': {
 
             },
-            'file': `dist/${pkg.nam}.min.js`
+            'file': `dist/${pkg.name}.min.js`
         }
     },
     {
@@ -72,7 +72,7 @@ module.exports = [
             'globals': {
 
             },
-            'file': `dist/${pkg.nam}.es.js`
+            'file': `dist/${pkg.name}.es.js`
         }
     },
 ];
