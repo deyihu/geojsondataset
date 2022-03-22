@@ -22,7 +22,7 @@
 <!-- <script type="text/javascript" src="https://unpkg.com/@maptalks/gl/dist/maptalksgl.js"></script> -->
 <script type="text/javascript" src="https://unpkg.com/three@0.104.0/build/three.min.js"></script>
 <script type="text/javascript" src="https://unpkg.com/maptalks.three/dist/maptalks.three.js"></script>
-<script type="text/javascript" src="../dist/geodataset.js"></script>
+<script type="text/javascript" src="../dist/geojsondataset.js"></script>
 
 <body>
 
@@ -39,7 +39,7 @@
         });
 
         // const layer = new maptalks.PolygonLayer('ll').addTo(map);
-        const geoDataSet = new geodataset.GeoDataSet({ coordinateCount: 3000, loopFPS: 2 });
+        const geoDataSet = new geojsondataset.GeoDataSet({ coordinateCount: 3000, loopFPS: 2 });
         const dataGroupId = 'dikuai';
 
         const material = new THREE.MeshPhongMaterial({ color: 'red' });

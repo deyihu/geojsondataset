@@ -24,19 +24,19 @@ module.exports = [
     {
         input: './index.js',
         plugins: basePlugins,
-        // external: [],
+        external: [],
         output: {
             'sourcemap': true,
             'format': 'umd',
-            'name': 'geodataset',
+            'name': pkg.name,
             'banner': banner,
             'outro': outro,
             'extend': true,
             'intro': intro,
-            // 'globals': {
+            'globals': {
 
-            // },
-            'file': 'dist/geodataset.js'
+            },
+            'file': `dist/${pkg.nam}.js`
         }
     },
     {
@@ -46,25 +46,7 @@ module.exports = [
         output: {
             'sourcemap': false,
             'format': 'umd',
-            'name': 'geodataset',
-            'banner': banner,
-            'outro': outro,
-            'extend': true,
-            'intro': intro,
-            // 'globals': {
-
-            // },
-            'file': 'dist/geodataset.min.js'
-        }
-    },
-    {
-        input: './index.js',
-        plugins: basePlugins,
-        external: ['geojson-seg','mitt'],
-        output: {
-            'sourcemap': false,
-            'format': 'es',
-            'name': 'geodataset',
+            'name': pkg.name,
             'banner': banner,
             'outro': outro,
             'extend': true,
@@ -72,7 +54,25 @@ module.exports = [
             'globals': {
 
             },
-            'file': 'dist/geodataset.es.js'
+            'file': `dist/${pkg.nam}.min.js`
+        }
+    },
+    {
+        input: './index.js',
+        plugins: basePlugins,
+        external: ['geojson-seg', 'mitt'],
+        output: {
+            'sourcemap': false,
+            'format': 'es',
+            'name': pkg.name,
+            'banner': banner,
+            'outro': outro,
+            'extend': true,
+            'intro': intro,
+            'globals': {
+
+            },
+            'file': `dist/${pkg.nam}.es.js`
         }
     },
 ];
