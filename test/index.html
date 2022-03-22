@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Map - Display a map</title>
+<style type="text/css">
+    html,
+    body {
+        margin: 0px;
+        height: 100%;
+        width: 100%
+    }
+
+    .container {
+        width: 100%;
+        height: 100%
+    }
+</style>
+<script type="text/javascript" src="https://unpkg.com/three@0.104.0/examples/js/libs/stats.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/maptalks/dist/maptalks.css">
+<script type="text/javascript" src="https://unpkg.com/maptalks/dist/maptalks.min.js"></script>
+<!-- <script type="text/javascript" src="https://unpkg.com/@maptalks/gl/dist/maptalksgl.js"></script> -->
+<script type="text/javascript" src="https://unpkg.com/three@0.104.0/build/three.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/maptalks.three/dist/maptalks.three.js"></script>
+<script type="text/javascript" src="../dist/geodataset.js"></script>
+
+<body>
+
+    <div id="map" class="container"></div>
+
+    <script>
+        var map = new maptalks.Map('map', {
+            "center": [120.35410921458265, 30.14518949717305], "zoom": 13.745375881176956, "pitch": 72.80000000000004, "bearing": -0.13760818373077655,
+            baseLayer: new maptalks.TileLayer('base', {
+                urlTemplate: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+                subdomains: ['a', 'b', 'c', 'd'],
+                attribution: '&copy; <a href="http://osm.org">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/">CARTO</a>'
+            })
+        });
+
+        // const layer = new maptalks.PolygonLayer('ll').addTo(map);
+        const geoDataSet = new geodataset.GeoDataSet({ coordinateCount: 3000, loopFPS: 2 });
+        const dataGroupId = 'dikuai';
+
+        const material = new THREE.MeshPhongMaterial({ color: 'red' });
+        const material1 = new THREE.MeshPhongMaterial({ color: 'white' });
+        geoDataSet.on(dataGroupId, (geojson) => {
+            // console.log(geojson);
+            // geojson.features.forEach(element => {
+            //     element.properties.height = 100;
+            // });
+            const mesh = threeLayer.toExtrudePolygons(geojson.features, { topColor: '#fff', asynchronous: true }, material1);
+            threeLayer.delayAddMesh(mesh);
+
+        })
+        geoDataSet.on(dataGroupId, (geojson) => {
+            // console.log(geojson);
+            // const polygons = maptalks.GeoJSON.toGeometry(geojson);
+            // vLayer1.addGeometry(polygons);
+            // const polygons = maptalks.GeoJSON.toGeometry(geojson);
+            // polygons.forEach(p => {
+            //     p.setProperties({ height: 1 })
+            // });
+            const mesh = threeLayer.toExtrudePolygons(geojson.features, { topColor: '#fff', altitude: 500, asynchronous: true }, material);
+            threeLayer.delayAddMesh(mesh);
+        })
+
+        // the ThreeLayer to draw buildings
+        var threeLayer = new maptalks.ThreeLayer('t', {
+            identifyCountOnEvent: 1,
+            // forceRenderOnMoving: true,
+            // forceRenderOnRotating: true
+        });
+        threeLayer.prepareToDraw = function (gl, scene, camera) {
+            stats = new Stats();
+            stats.domElement.style.zIndex = 100;
+            document.getElementById('map').appendChild(stats.domElement);
+            var light = new THREE.DirectionalLight(0xffffff);
+            light.position.set(0, -10, 10).normalize();
+            scene.add(light);
+            scene.add(new THREE.AmbientLight('#fff', 0.5));
+            animate();
+            setTimeout(() => {
+                addPolygon();
+            }, 2000);
+
+        };
+        threeLayer.addTo(map);
+
+        function animate() {
+            requestAnimationFrame(animate);
+            stats.update();
+            threeLayer.loop();
+            threeLayer._needsUpdate = !threeLayer._needsUpdate;
+            if (threeLayer._needsUpdate && !threeLayer.isRendering()) {
+                threeLayer.redraw();
+            }
+
+        }
+
+        function addPolygon() {
+            fetch('./export-1647920376160.geojson').then(res => res.json()).then(geojson => {
+                geojson.features.forEach(element => {
+                    element.properties.height = 500;
+                });
+                geoDataSet.addGeoData(dataGroupId, geojson);
+            })
+        }
+
+
+    </script>
+</body>
+
+</html>
