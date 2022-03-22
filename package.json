@@ -2,8 +2,8 @@
   "name": "geojsondataset",
   "version": "0.0.1",
   "description": "geojson dataset",
-  "main": "dist/geodataset.js",
-  "module": "dist/geodataset.es.js",
+  "main": "dist/geojsondataset.js",
+  "module": "dist/geojsondataset.es.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rollup --environment BUILD:production -c rollup.config.js"
