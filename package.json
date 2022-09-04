@@ -1,6 +1,6 @@
 {
   "name": "geojsondataset",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "geojson dataset",
   "main": "dist/geojsondataset.js",
   "module": "dist/geojsondataset.es.js",
