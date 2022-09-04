@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/deyihu/geojsondataset#readme",
   "dependencies": {
-    "geojson-seg": "^0.0.4",
+    "geojson-seg": "^0.0.5",
     "mitt": "^3.0.0"
   },
   "devDependencies": {
