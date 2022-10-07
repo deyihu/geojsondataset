@@ -30,7 +30,7 @@ module.exports = [
             'format': 'umd',
             'name': pkg.name,
             'banner': banner,
-            'outro': outro,
+            // 'outro': outro,
             'extend': true,
             'intro': intro,
             'globals': {
@@ -48,7 +48,7 @@ module.exports = [
             'format': 'umd',
             'name': pkg.name,
             'banner': banner,
-            'outro': outro,
+            // 'outro': outro,
             'extend': true,
             'intro': intro,
             'globals': {
@@ -66,7 +66,7 @@ module.exports = [
             'format': 'es',
             'name': pkg.name,
             'banner': banner,
-            'outro': outro,
+            // 'outro': outro,
             'extend': true,
             'intro': intro,
             'globals': {
